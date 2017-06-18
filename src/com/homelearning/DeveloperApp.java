@@ -1,7 +1,7 @@
 package com.homelearning;
 /*Vitaliy Ostapenko
 ДЗ 04.1
-Практическое задание по модулю 1.4 Java I/O
+Практич еское задание по модулю 1.4 Java I/O
 
 Задание по Java IO
 
