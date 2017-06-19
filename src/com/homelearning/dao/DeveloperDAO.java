@@ -1,11 +1,12 @@
 package com.homelearning.dao;
 
 import com.homelearning.model.Developer;
+import org.jetbrains.annotations.NotNull;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 public class DeveloperDAO {
     private final String separator = ", ";
@@ -16,25 +17,43 @@ public class DeveloperDAO {
     }
 
     public Collection<Developer> getAllDevelopers(){
-        return null;
+        List<Developer> developers = new ArrayList<>();
+        try(BufferedReader reader = new BufferedReader(new FileReader(filePath))){
+            reader.lines().forEach(line -> developers.add(developerFromString(line)));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return developers;
     }
 
-    public void save(Developer developer){
-        StringBuilder sb = new StringBuilder();
-        sb.append(developer.getId()).append(separator)
-                .append(developer.getFirstName()).append(separator)
-                .append(developer.getLastName()).append(separator)
-                .append(developer.getSpecialty()).append(separator)
-                .append(developer.getExperience()).append(separator)
-                .append(developer.getSalary()).append("\n");
+
+    @NotNull
+    private Developer developerFromString(String line) {
+        String devParams[] = line.split(separator);
+        return new Developer(Integer.parseInt(devParams[0]), devParams[1], devParams[2], devParams[3],
+                Integer.parseInt(devParams[4]), Double.parseDouble(devParams[5]));
+    }
+
+    public void save(@NotNull Developer developer){
+        String developerAsString = developerToString(developer);
         try(BufferedWriter writer = new BufferedWriter(new FileWriter(filePath, true))){
-            writer.write(sb.toString(), 0, sb.length());
+            writer.write(developerAsString, 0, developerAsString.length());
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public void update(Developer developer){
+    @NotNull
+    private String developerToString(@NotNull Developer developer) {
+        return String.valueOf(developer.getId()) + separator +
+                developer.getFirstName() + separator +
+                developer.getLastName() + separator +
+                developer.getSpecialty() + separator +
+                developer.getExperience() + separator +
+                developer.getSalary() + "\n";
+    }
+
+    public void update(@NotNull Developer developer){
 
     }
 

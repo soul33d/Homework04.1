@@ -8,7 +8,9 @@ public class DeveloperView {
 
     public void execute(){
         developerController.save(new Developer
-                (1,"Pavel", "Baranovskiy", "Java-trainer", 5, 5000.00));
+                (1,"Pavel", "Baranowski", "Java-trainer", 5, 5000.00));
+        developerController.save(new Developer
+                (2,"Eugene", "Sklyarov", "Mentor", 5, 5000.00));
     }
 
     public void printMenu(){
