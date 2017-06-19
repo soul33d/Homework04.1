@@ -1,4 +1,7 @@
 package com.homelearning;
+
+import com.homelearning.view.DeveloperView;
+
 /*Vitaliy Ostapenko
 ДЗ 04.1
 Практич еское задание по модулю 1.4 Java I/O
@@ -27,6 +30,6 @@ Developer - POJO класс, который содержит данные о р�
  */
 public class DeveloperApp {
     public static void main(String[] args) {
-
+        new DeveloperView().execute();
     }
 }
