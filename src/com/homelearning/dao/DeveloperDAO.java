@@ -34,6 +34,7 @@ public class DeveloperDAO {
                 Integer.parseInt(devParams[4]), Double.parseDouble(devParams[5]));
     }
 
+    /**@throws IllegalArgumentException if developer is null*/
     public void save(@NotNull Developer developer){
         String developerAsString = developerToString(developer);
         try(BufferedWriter writer = new BufferedWriter(new FileWriter(filePath, true))){
@@ -43,6 +44,7 @@ public class DeveloperDAO {
         }
     }
 
+    /**@throws IllegalArgumentException if developer is null*/
     @NotNull
     private String developerToString(@NotNull Developer developer) {
         return String.valueOf(developer.getId()) + separator +
@@ -53,6 +55,7 @@ public class DeveloperDAO {
                 developer.getSalary() + "\n";
     }
 
+    /**@throws IllegalArgumentException if developer is null*/
     public void update(@NotNull Developer developer){
 
     }
