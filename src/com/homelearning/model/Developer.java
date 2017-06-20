@@ -9,9 +9,6 @@ public class Developer {
     private int experience;
     private double salary;
 
-    public Developer() {
-    }
-
     public Developer(int id, String firstName, String lastName, String specialty, int experience, double salary) {
         this.id = id;
         this.firstName = firstName;
