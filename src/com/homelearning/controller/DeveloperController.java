@@ -10,8 +10,11 @@ import java.util.Collection;
 public class DeveloperController {
     private DeveloperDAO developerDAO = new DeveloperDAO();
 
-    public Collection<Developer> getAllDevelopers(){
-        return developerDAO.getAllDevelopers();
+    public String getAllDevelopers(){
+        Collection<Developer> developers = developerDAO.getAllDevelopers();
+        StringBuilder sb = new StringBuilder();
+        developers.forEach(developer -> sb.append(developer).append("\n"));
+        return sb.toString();
     }
 
     @Nullable

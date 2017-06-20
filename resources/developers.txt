@@ -1,2 +1,4 @@
-1, Pavel, Baranowski, Java-trainer, 5, 5000.0
+1, Pavel, Baranowski, java-trainer, 6, 6500.0
 2, Eugene, Sklyarov, Mentor, 5, 5000.0
+5, Vitaliy, Ostapenko, student, 0, 0.0
+3, Olesya, Pryadilnikova, student, 0, 0.0
