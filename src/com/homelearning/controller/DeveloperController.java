@@ -26,4 +26,8 @@ public class DeveloperController {
     public void update(@NotNull Developer developer){
         developerDAO.update(developer);
     }
+
+    public void delete(int id){
+        developerDAO.delete(id);
+    }
 }

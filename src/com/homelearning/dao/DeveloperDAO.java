@@ -19,15 +19,17 @@ public class DeveloperDAO {
     public Developer getById(int id){
         try(BufferedReader reader = new BufferedReader(new FileReader(filePath))){
             String line;
-            int lineId;
             while ((line = reader.readLine()) != null) {
-                lineId = Integer.parseInt(line.substring(0, line.indexOf(separator)));
-                if (id == lineId) return developerFromString(line);
+                if (id == getDeveloperId(line)) return developerFromString(line);
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
         return null;
+    }
+
+    private int getDeveloperId(String line) {
+        return Integer.parseInt(line.substring(0, line.indexOf(separator)));
     }
 
     public Collection<Developer> getAllDevelopers(){
@@ -71,10 +73,37 @@ public class DeveloperDAO {
 
     /**@throws IllegalArgumentException if developer is null*/
     public void update(@NotNull Developer developer){
-
+        StringBuilder fileText = new StringBuilder();
+        int id = developer.getId();
+        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+            reader.lines().forEach(line -> {
+                if (id != getDeveloperId(line)) fileText.append(line).append("\n");
+                else fileText.append(developerToString(developer));
+            });
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        overwriteFile(fileText.toString());
     }
 
     public void delete(int id){
+        StringBuilder fileText = new StringBuilder();
+        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+            reader.lines().forEach(line -> {
+                if (id != getDeveloperId(line)) fileText.append(line).append("\n");
+            });
 
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        overwriteFile(fileText.toString());
+    }
+
+    private void overwriteFile(String fileText) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
+            writer.write(fileText);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
