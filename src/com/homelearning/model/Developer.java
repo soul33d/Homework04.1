@@ -7,12 +7,12 @@ public class Developer {
     private String lastName;
     private String specialty;
     private int experience;
-    private Double salary;
+    private double salary;
 
     public Developer() {
     }
 
-    public Developer(int id, String firstName, String lastName, String specialty, int experience, Double salary) {
+    public Developer(int id, String firstName, String lastName, String specialty, int experience, double salary) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -61,7 +61,7 @@ public class Developer {
         this.experience = experience;
     }
 
-    public Double getSalary() {
+    public double getSalary() {
         return salary;
     }
 
