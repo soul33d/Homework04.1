@@ -2,6 +2,7 @@ package com.homelearning.dao;
 
 import com.homelearning.model.Developer;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -9,10 +10,23 @@ import java.util.Collection;
 import java.util.List;
 
 public class DeveloperDAO {
+    /**default separator for {@link Developer} fields to store in file,
+     * if it changed file in {@link #filePath} must be cleared or replaced*/
     private final String separator = ", ";
     private final String filePath = "resources/developers.txt";
 
+    @Nullable
     public Developer getById(int id){
+        try(BufferedReader reader = new BufferedReader(new FileReader(filePath))){
+            String line;
+            int lineId;
+            while ((line = reader.readLine()) != null) {
+                lineId = Integer.parseInt(line.substring(0, line.indexOf(separator)));
+                if (id == lineId) return developerFromString(line);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return null;
     }
 
