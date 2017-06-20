@@ -9,9 +9,6 @@ import java.util.Collection;
 public class DeveloperController {
     private DeveloperDAO developerDAO = new DeveloperDAO();
 
-    public DeveloperController() {
-    }
-
     public Collection<Developer> getAllDevelopers(){
         return developerDAO.getAllDevelopers();
     }
