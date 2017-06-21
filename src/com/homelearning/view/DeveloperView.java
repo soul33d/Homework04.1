@@ -74,7 +74,7 @@ public class DeveloperView {
     }
 
     private int readIntFromInput(String msg){
-        System.out.println(msg);
+        if(msg.length() > 0) System.out.println(msg);
         if (scanner.hasNextInt()) return scanner.nextInt();
         scanner.next();
         System.out.println("Incorrect input, please enter an integer.");
