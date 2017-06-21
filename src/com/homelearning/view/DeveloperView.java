@@ -16,11 +16,12 @@ public class DeveloperView {
 
     private DeveloperController developerController;
     private Scanner scanner;
-    private String intIdMessage = "Enter integer id:";
+    private String intIdMessage;
 
     public DeveloperView() {
         developerController = new DeveloperController();
         scanner = new Scanner(System.in);
+        intIdMessage = "Enter integer id:";
     }
 
     public void execute(){
