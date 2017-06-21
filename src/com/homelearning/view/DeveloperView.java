@@ -59,7 +59,7 @@ public class DeveloperView {
             case EXIT_KEY : System.exit(0);
                 break;
             default:
-                System.out.printf("There is no action for %d. Please press correct action key.\n", enteredInteger);
+                printNoActionMsg(enteredInteger);
                 printMenu();
                 selectMainMenuAction();
                 break;
@@ -92,7 +92,7 @@ public class DeveloperView {
             printDeveloperUpdateMenu();
             selectUpdateDeveloperAction(developer);
         } else {
-            System.out.printf("Developer with id %d not found.\n", id);
+            printNoDeveloperMsg(id);
         }
     }
 
@@ -105,7 +105,6 @@ public class DeveloperView {
         System.out.printf("Press %d to save changes.\n", SAVE_CHANGES_KEY);
         System.out.printf("Press %d to cancel update.\n", CANCEL_UPDATE_KEY);
     }
-
 
     private void selectUpdateDeveloperAction(Developer developer) {
         int enteredInteger = readIntFromInput();
@@ -125,7 +124,7 @@ public class DeveloperView {
             case CANCEL_UPDATE_KEY:
                 System.out.println("Changes canceled.");
                 return;
-            default: System.out.printf("There is no action for %d. Please press correct action key.\n", enteredInteger);
+            default: printNoActionMsg(enteredInteger);
                 printDeveloperUpdateMenu();
                 selectUpdateDeveloperAction(developer);
                 break;
@@ -135,24 +134,33 @@ public class DeveloperView {
         selectUpdateDeveloperAction(developer);
     }
 
+
     private void deleteDeveloperById() {
         int id = readIdFromInput();
         Developer developer = developerController.delete(id);
         if (developer != null) {
             System.out.println("Removed:");
             System.out.println(developer);
-        } else System.out.printf("There is no developer with id %d\n", id);
+        } else printNoDeveloperMsg(id);
     }
 
     private void printById(){
         int id = readIdFromInput();
         Developer developer = developerController.getById(id);
         if (developer != null) System.out.println(developer);
-        else System.out.printf("There is no developer with id %d.\n", id);
+        else printNoDeveloperMsg(id);
     }
 
     private void printAllDevelopers() {
         System.out.println(developerController.getAllDevelopers());
+    }
+
+    private void printNoActionMsg(int enteredInteger) {
+        System.out.printf("There is no action for %d. Please press correct action key.\n", enteredInteger);
+    }
+
+    private void printNoDeveloperMsg(int id) {
+        System.out.printf("There is no developer with id %d\n", id);
     }
 
     private int readIdFromInput() {
