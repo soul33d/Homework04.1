@@ -85,6 +85,7 @@ public class DeveloperView {
         developerController.save(readDeveloperFromInput());
     }
 
+
     @NotNull
     private Developer readDeveloperFromInput() {
         int id = readIntFromInput(intIdMessage);
@@ -106,7 +107,7 @@ public class DeveloperView {
 
     private String readStringFromInput(String msg) {
         System.out.println(msg);
-        if (scanner.hasNextLine()) return scanner.nextLine();
+        if (scanner.hasNext()) return scanner.next();
         return readStringFromInput(msg);
     }
 

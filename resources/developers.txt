@@ -2,3 +2,5 @@
 2, Eugene, Sklyarov, Mentor, 5, 5000.0
 5, Vitaliy, Ostapenko, student, 0, 0.0
 3, Olesya, Pryadilnikova, student, 0, 0.0
+4, Vasya, Pupkin, junior, 1, 800.0
+6, Ivan, Dulin, junior, 1, 700.0
