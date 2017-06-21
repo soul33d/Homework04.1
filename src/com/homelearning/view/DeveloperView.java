@@ -14,19 +14,25 @@ public class DeveloperView {
     private static final int GET_ALL_DEVELOPERS_KEY = 5;
     private static final int EXIT_KEY = 6;
 
+    private static final int UPDATE_FIRST_NAME_KEY = 1;
+    private static final int UPDATE_LAST_NAME_KEY = 2;
+    private static final int UPDATE_SPECIALTY_KEY = 3;
+    private static final int UPDATE_EXPERIENCE_KEY = 4;
+    private static final int UPDATE_SALARY_KEY = 5;
+    private static final int SAVE_CHANGES_KEY = 6;
+    private static final int CANCEL_UPDATE_KEY = 7;
+
     private DeveloperController developerController;
     private Scanner scanner;
-    private String intIdMessage;
 
     public DeveloperView() {
         developerController = new DeveloperController();
         scanner = new Scanner(System.in);
-        intIdMessage = "Enter integer id:";
     }
 
     public void execute(){
         printMenu();
-        selectAction();
+        selectMainMenuAction();
     }
 
     private void printMenu(){
@@ -38,14 +44,7 @@ public class DeveloperView {
         System.out.printf("Press %d to exit.\n", EXIT_KEY);
     }
 
-    private void printById(){
-        int id = readIntFromInput(intIdMessage);
-        Developer developer = developerController.getById(id);
-        if (developer != null) System.out.println(developer);
-        else System.out.printf("There is no developer with id %d.\n", id);
-    }
-
-    private void selectAction(){
+    private void selectMainMenuAction(){
         int enteredInteger = readIntFromInput();
         switch (enteredInteger){
             case ADD_DEVELOPER_KEY: addDeveloperFromInput();
@@ -63,11 +62,116 @@ public class DeveloperView {
             default:
                 System.out.printf("There is no action for %d. Please press correct action key.\n", enteredInteger);
                 printMenu();
-                selectAction();
+                selectMainMenuAction();
                 break;
         }
         printMenu();
-        selectAction();
+        selectMainMenuAction();
+    }
+
+    private void addDeveloperFromInput() {
+        developerController.save(readDeveloperFromInput());
+    }
+
+    private void updateDeveloperById() {
+        int id = readIdFromInput();
+        Developer developer = developerController.getById(id);
+        if (developer != null){
+            System.out.println(developer);
+            printDeveloperUpdateMenu();
+            selectUpdateDeveloperAction(developer);
+        } else {
+            System.out.printf("Developer with id %d not found.\n", id);
+        }
+    }
+
+    private void printDeveloperUpdateMenu() {
+        System.out.printf("Press %d to update first name.\n", UPDATE_FIRST_NAME_KEY);
+        System.out.printf("Press %d to update last name.\n", UPDATE_LAST_NAME_KEY);
+        System.out.printf("Press %d to update specialty.\n", UPDATE_SPECIALTY_KEY);
+        System.out.printf("Press %d to update experience.\n", UPDATE_EXPERIENCE_KEY);
+        System.out.printf("Press %d to update salary.\n", UPDATE_SALARY_KEY);
+        System.out.printf("Press %d to save changes.\n", SAVE_CHANGES_KEY);
+        System.out.printf("Press %d to cancel update.\n", CANCEL_UPDATE_KEY);
+    }
+
+
+    private void selectUpdateDeveloperAction(Developer developer) {
+        int enteredInteger = readIntFromInput();
+        switch (enteredInteger){
+            case UPDATE_FIRST_NAME_KEY: developer.setFirstName(readFirstNameFromInput());
+                break;
+            case UPDATE_LAST_NAME_KEY: developer.setLastName(readLastNameFromInput());
+                break;
+            case UPDATE_SPECIALTY_KEY: developer.setSpecialty(readSpecialtyFromInput());
+                break;
+            case UPDATE_EXPERIENCE_KEY: developer.setExperience(readExperienceFromInput());
+                break;
+            case UPDATE_SALARY_KEY: developer.setSalary(readSalaryFromInput());
+                break;
+            case SAVE_CHANGES_KEY: developerController.update(developer);
+                return;
+            case CANCEL_UPDATE_KEY:
+                System.out.println("Changes canceled.");
+                return;
+            default: System.out.printf("There is no action for %d. Please press correct action key.\n", enteredInteger);
+                printDeveloperUpdateMenu();
+                selectUpdateDeveloperAction(developer);
+                break;
+        }
+        System.out.println(developer);
+        printDeveloperUpdateMenu();
+        selectUpdateDeveloperAction(developer);
+    }
+
+    private void deleteDeveloperById() {
+        int id = readIdFromInput();
+        developerController.delete(id);
+    }
+
+    private void printById(){
+        int id = readIdFromInput();
+        Developer developer = developerController.getById(id);
+        if (developer != null) System.out.println(developer);
+        else System.out.printf("There is no developer with id %d.\n", id);
+    }
+
+    private void printAllDevelopers() {
+        System.out.println(developerController.getAllDevelopers());
+    }
+
+    @NotNull
+    private Developer readDeveloperFromInput() {
+        return new Developer(readIdFromInput(),
+                readFirstNameFromInput(),
+                readLastNameFromInput(),
+                readSpecialtyFromInput(),
+                readExperienceFromInput(),
+                readSalaryFromInput());
+    }
+
+    private int readIdFromInput() {
+        return readIntFromInput("Enter integer id:");
+    }
+
+    private String readFirstNameFromInput() {
+        return readStringFromInput("Enter first name:");
+    }
+
+    private String readLastNameFromInput() {
+        return readStringFromInput("Enter last name:");
+    }
+
+    private String readSpecialtyFromInput() {
+        return readStringFromInput("Enter specialty:");
+    }
+
+    private int readExperienceFromInput() {
+        return readIntFromInput("Enter integer experience");
+    }
+
+    private double readSalaryFromInput() {
+        return readDoubleFromInput("Enter double salary:");
     }
 
     private int readIntFromInput(){
@@ -82,20 +186,10 @@ public class DeveloperView {
         return readIntFromInput();
     }
 
-    private void addDeveloperFromInput() {
-        developerController.save(readDeveloperFromInput());
-    }
-
-
-    @NotNull
-    private Developer readDeveloperFromInput() {
-        int id = readIntFromInput(intIdMessage);
-        String firstName = readStringFromInput("Enter first name:");
-        String lastName = readStringFromInput("Enter last name:");
-        String specialty = readStringFromInput("Enter specialty:");
-        int experience = readIntFromInput("Enter integer experience");
-        double salary = readDoubleFromInput("Enter double salary:");
-        return new Developer(id, firstName, lastName, specialty, experience, salary);
+    private String readStringFromInput(String msg) {
+        System.out.println(msg);
+        if (scanner.hasNext()) return scanner.next();
+        return readStringFromInput(msg);
     }
 
     private double readDoubleFromInput(String msg) {
@@ -104,31 +198,5 @@ public class DeveloperView {
         scanner.next();
         System.out.println("Incorrect input. Please enter double.");
         return readDoubleFromInput(msg);
-    }
-
-    private String readStringFromInput(String msg) {
-        System.out.println(msg);
-        if (scanner.hasNext()) return scanner.next();
-        return readStringFromInput(msg);
-    }
-
-    private void updateDeveloperById() {
-        int id = readIntFromInput(intIdMessage);
-        Developer developer = developerController.getById(id);
-        if (developer != null){
-            System.out.println(developer);
-            developerController.update(readDeveloperFromInput());
-        } else {
-            System.out.printf("Developer with id %d not found.\n", id);
-        }
-    }
-
-    private void deleteDeveloperById() {
-        int id = readIntFromInput(intIdMessage);
-        developerController.delete(id);
-    }
-
-    private void printAllDevelopers() {
-        System.out.println(developerController.getAllDevelopers());
     }
 }
