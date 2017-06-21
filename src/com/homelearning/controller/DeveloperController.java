@@ -23,10 +23,12 @@ public class DeveloperController {
         return developerDAO.getById(id);
     }
 
+    /**@throws IllegalArgumentException if developer is null*/
     public void save(@NotNull Developer developer){
         developerDAO.save(developer);
     }
 
+    /**@throws IllegalArgumentException if developer is null*/
     public void update(@NotNull Developer developer){
         developerDAO.update(developer);
     }

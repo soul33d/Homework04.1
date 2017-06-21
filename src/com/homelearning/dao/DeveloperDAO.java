@@ -50,6 +50,7 @@ public class DeveloperDAO {
                 Integer.parseInt(devParams[4]), Double.parseDouble(devParams[5]));
     }
 
+    /**@throws IllegalArgumentException if developer is null*/
     private void developerFromString(@NotNull Developer developer, String line){
         String devParams[] = line.split(separator);
         developer.setId(Integer.parseInt(devParams[0]));
