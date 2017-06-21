@@ -72,7 +72,7 @@ public class DeveloperView {
         int id = readIdFromInput();
         Developer developer = developerController.getById(id);
         if (developer == null) {
-            developerController.save(new Developer(readIdFromInput(),
+            developerController.save(new Developer(id,
                     readFirstNameFromInput(),
                     readLastNameFromInput(),
                     readSpecialtyFromInput(),
