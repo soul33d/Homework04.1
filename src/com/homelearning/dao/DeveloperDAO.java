@@ -50,6 +50,16 @@ public class DeveloperDAO {
                 Integer.parseInt(devParams[4]), Double.parseDouble(devParams[5]));
     }
 
+    private void developerFromString(@NotNull Developer developer, String line){
+        String devParams[] = line.split(separator);
+        developer.setId(Integer.parseInt(devParams[0]));
+        developer.setFirstName(devParams[1]);
+        developer.setLastName(devParams[2]);
+        developer.setSpecialty(devParams[3]);
+        developer.setExperience(Integer.parseInt(devParams[4]));
+        developer.setSalary(Double.parseDouble(devParams[5]));
+    }
+
     /**@throws IllegalArgumentException if developer is null*/
     public void save(@NotNull Developer developer){
         String developerAsString = developerToString(developer);
@@ -86,17 +96,24 @@ public class DeveloperDAO {
         overwriteFile(fileText.toString());
     }
 
-    public void delete(int id){
+    @Nullable
+    public Developer delete(int id){
+        Developer developer = new Developer();
         StringBuilder fileText = new StringBuilder();
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             reader.lines().forEach(line -> {
                 if (id != getDeveloperId(line)) fileText.append(line).append("\n");
+                else developerFromString(developer, line);
             });
 
         } catch (IOException e) {
             e.printStackTrace();
         }
-        overwriteFile(fileText.toString());
+        if (developer.getSpecialty() != null) {
+            overwriteFile(fileText.toString());
+            return developer;
+        }
+        return null;
     }
 
     private void overwriteFile(String fileText) {

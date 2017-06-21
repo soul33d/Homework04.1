@@ -137,7 +137,11 @@ public class DeveloperView {
 
     private void deleteDeveloperById() {
         int id = readIdFromInput();
-        developerController.delete(id);
+        Developer developer = developerController.delete(id);
+        if (developer != null) {
+            System.out.println("Removed:");
+            System.out.println(developer);
+        } else System.out.printf("There is no developer with id %d\n", id);
     }
 
     private void printById(){

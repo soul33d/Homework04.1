@@ -12,6 +12,7 @@ public class DeveloperController {
 
     public String getAllDevelopers(){
         Collection<Developer> developers = developerDAO.getAllDevelopers();
+        if (developers.size() == 0) return "There is no developers in the file.";
         StringBuilder sb = new StringBuilder();
         developers.forEach(developer -> sb.append(developer).append("\n"));
         return sb.toString();
@@ -30,7 +31,8 @@ public class DeveloperController {
         developerDAO.update(developer);
     }
 
-    public void delete(int id){
-        developerDAO.delete(id);
+    @Nullable
+    public Developer delete(int id){
+        return developerDAO.delete(id);
     }
 }
