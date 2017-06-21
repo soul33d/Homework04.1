@@ -188,7 +188,7 @@ public class DeveloperView {
 
     private String readStringFromInput(String msg) {
         System.out.println(msg);
-        if (scanner.hasNext()) return scanner.next();
+        if (scanner.hasNext()) return scanner.next() + scanner.nextLine();
         return readStringFromInput(msg);
     }
 
