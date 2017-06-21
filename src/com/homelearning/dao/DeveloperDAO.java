@@ -32,6 +32,7 @@ public class DeveloperDAO {
         return Integer.parseInt(line.substring(0, line.indexOf(separator)));
     }
 
+    /**returns empty {@link Collection} if there is no developers*/
     public Collection<Developer> getAllDevelopers(){
         List<Developer> developers = new ArrayList<>();
         try(BufferedReader reader = new BufferedReader(new FileReader(filePath))){
