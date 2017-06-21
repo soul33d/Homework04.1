@@ -12,7 +12,7 @@ import java.util.List;
 public class DeveloperDAO {
     /**default separator for {@link Developer} fields to store in file,
      * if it changed file in {@link #filePath} must be cleared or replaced*/
-    private final String separator = ", ";
+    private final String separator = ";_";
     private final String filePath = "resources" + File.separator + "developers.txt";
 
     @Nullable
