@@ -2,7 +2,6 @@ package com.homelearning.view;
 
 import com.homelearning.controller.DeveloperController;
 import com.homelearning.model.Developer;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.Scanner;
 
@@ -70,7 +69,19 @@ public class DeveloperView {
     }
 
     private void addDeveloperFromInput() {
-        developerController.save(readDeveloperFromInput());
+        int id = readIdFromInput();
+        Developer developer = developerController.getById(id);
+        if (developer == null) {
+            developerController.save(new Developer(readIdFromInput(),
+                    readFirstNameFromInput(),
+                    readLastNameFromInput(),
+                    readSpecialtyFromInput(),
+                    readExperienceFromInput(),
+                    readSalaryFromInput()));
+        } else {
+            System.out.printf("Developer with id %d already exists:\n", id);
+            System.out.println(developer);
+        }
     }
 
     private void updateDeveloperById() {
@@ -138,16 +149,6 @@ public class DeveloperView {
 
     private void printAllDevelopers() {
         System.out.println(developerController.getAllDevelopers());
-    }
-
-    @NotNull
-    private Developer readDeveloperFromInput() {
-        return new Developer(readIdFromInput(),
-                readFirstNameFromInput(),
-                readLastNameFromInput(),
-                readSpecialtyFromInput(),
-                readExperienceFromInput(),
-                readSalaryFromInput());
     }
 
     private int readIdFromInput() {
