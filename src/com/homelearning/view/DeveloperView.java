@@ -3,6 +3,7 @@ package com.homelearning.view;
 import com.homelearning.controller.DeveloperController;
 import com.homelearning.model.Developer;
 
+import java.util.Collection;
 import java.util.Scanner;
 
 public class DeveloperView {
@@ -152,7 +153,9 @@ public class DeveloperView {
     }
 
     private void printAllDevelopers() {
-        System.out.println(developerController.getAllDevelopers());
+        Collection<Developer> developers = developerController.getAllDevelopers();
+        if (developers.size() == 0) System.out.println("There is no developers in the file.");
+        developers.forEach(System.out::println);
     }
 
     private void printNoActionMsg(int enteredInteger) {

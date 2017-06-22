@@ -10,12 +10,9 @@ import java.util.Collection;
 public class DeveloperController {
     private DeveloperDAO developerDAO = new DeveloperDAO();
 
-    public String getAllDevelopers(){
-        Collection<Developer> developers = developerDAO.getAllDevelopers();
-        if (developers.size() == 0) return "There is no developers in the file.";
-        StringBuilder sb = new StringBuilder();
-        developers.forEach(developer -> sb.append(developer).append("\n"));
-        return sb.toString();
+    /**returns empty {@link Collection} if there is no developers*/
+    public Collection<Developer> getAllDevelopers(){
+        return developerDAO.getAllDevelopers();
     }
 
     @Nullable
